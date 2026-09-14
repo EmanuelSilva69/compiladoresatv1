@@ -261,18 +261,30 @@ int main(void) {
         int lw = 2; // espessura
         Color cAresta = LIGHTGRAY;
 
+        // Caminho alternativo curvo: q0 -> q2 (digito direto, sem sinal)
+        int curvaY = 220;
+        DrawLine(posicoes[Q0].x + 20, posicoes[Q0].y - 15, posicoes[Q0].x + 80, curvaY, cAresta);
+        DrawLine(posicoes[Q0].x + 80, curvaY, posicoes[Q2].x - 80, curvaY, cAresta);
+        DrawLine(posicoes[Q2].x - 80, curvaY, posicoes[Q2].x - 20, posicoes[Q2].y - 15, cAresta);
+
         // Linha principal: q0 -> q1 -> q2 -> q3 -> q4
         DrawLine(posicoes[Q0].x + 28, posicoes[Q0].y, posicoes[Q1].x - 28, posicoes[Q1].y, cAresta);
         DrawLine(posicoes[Q1].x + 28, posicoes[Q1].y, posicoes[Q2].x - 28, posicoes[Q2].y, cAresta);
         DrawLine(posicoes[Q2].x + 28, posicoes[Q2].y, posicoes[Q3].x - 28, posicoes[Q3].y, cAresta);
         DrawLine(posicoes[Q3].x + 28, posicoes[Q3].y, posicoes[Q4].x - 28, posicoes[Q4].y, cAresta);
 
-        // Descida: q2 -> q5 (Final Int)
-        DrawLine(posicoes[Q2].x, posicoes[Q2].y + 28, posicoes[Q5].x, posicoes[Q5].y - 28, cAresta);
+        // Caminho alternativo curvo: q2 -> q5 (Final Int)
+        int curvaX = 480;
+        DrawLine(posicoes[Q2].x + 20, posicoes[Q2].y + 18, curvaX, posicoes[Q2].y + 60, cAresta);
+        DrawLine(curvaX, posicoes[Q2].y + 60, curvaX, posicoes[Q5].y - 60, cAresta);
+        DrawLine(curvaX, posicoes[Q5].y - 60, posicoes[Q5].x + 20, posicoes[Q5].y - 18, cAresta);
         // Descida: q4 -> q6 (Final Float)
         DrawLine(posicoes[Q4].x, posicoes[Q4].y + 28, posicoes[Q6].x, posicoes[Q6].y - 28, cAresta);
 
         // === ROTULOS DAS ARESTAS ===
+        // Caminho alternativo q0 -> q2
+        DrawText("[D]", (posicoes[Q0].x + posicoes[Q2].x) / 2 - 8, curvaY - 20, 14, DARKGREEN);
+
         DrawText("[+/-]", (posicoes[Q0].x + posicoes[Q1].x) / 2 - 15, posicoes[Q0].y - 25, 14, DARKBLUE);
         DrawText("[D]", (posicoes[Q1].x + posicoes[Q2].x) / 2 - 8, posicoes[Q1].y - 25, 14, BLACK);
         DrawText("[,]", (posicoes[Q2].x + posicoes[Q3].x) / 2 - 8, posicoes[Q2].y - 25, 14, BLACK);
@@ -283,8 +295,8 @@ int main(void) {
         // Loop em cima de q4 (Float)
         DrawText("[D]", posicoes[Q4].x - 8, posicoes[Q4].y - 55, 14, BLACK);
 
-        // q2 -> q5
-        DrawText("[outro]", posicoes[Q2].x + 35, (posicoes[Q2].y + posicoes[Q5].y) / 2, 14, BLACK);
+        // q2 -> q5 (curva)
+        DrawText("[outro]", curvaX + 8, (posicoes[Q2].y + posicoes[Q5].y) / 2, 14, BLACK);
         // q4 -> q6
         DrawText("[outro]", posicoes[Q4].x + 35, (posicoes[Q4].y + posicoes[Q6].y) / 2, 14, BLACK);
 
