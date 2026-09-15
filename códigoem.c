@@ -102,18 +102,10 @@ int main(void) {
         // --- LOGICA DO AFD ---
         if (!editando && !processamento_concluido) {
             // Pular caracteres irrelevantes no q0 sem gastar tempo
+            // (para em sinal, digito ou fim de string — deixa o switch lidar com eles)
             if (estado == Q0) {
                 while (entrada[i] != '\0' && entrada[i] != '+' && entrada[i] != '-' && !isdigit((unsigned char)entrada[i])) {
                     i++;
-                }
-                // Buffer: se encontrar sinal no q0, consume imediatamente e armazena
-                // mas NAO incrementa i (o digito sera lido no proximo tick)
-                if (entrada[i] == '+' || entrada[i] == '-') {
-                    inicio_token = i;
-                    caractere_anterior = i; // mostra o sinal na animacao
-                    i++; // avanca pra posicao do digito (sera lido no proximo tick)
-                    estado = Q1; // vai pra q1 (Sinal) mas o tick ja foi consumido aqui
-                    timer = 0; // reseta pra dar um passo visual imediato
                 }
             }
 
